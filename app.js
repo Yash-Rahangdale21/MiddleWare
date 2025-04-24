@@ -49,7 +49,7 @@ app.use("/random",(req,res,next)=>{
 
 
 
-//404
+//404 error handling
 app.use((req,res)=>{
     res.status(404).send("Page not found");
 });
