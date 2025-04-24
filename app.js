@@ -22,15 +22,36 @@ const app = express();
 // });
 
 /* Loggar middleware */
-// app.use((req,res,next)=>{
+// app.use((req,res,next)=>{   // iska matlab hi root path hota quki koi path define nhi kiya
 //     req.time = new Date(Date.now()).toString();  // human read format
 //     console.log(req.method,req.hostname,req.path,req.time);
 //     next();
 // });
 
+// ye middleware layer hai api ko protect karne ke liye
+const checkToken = (req,res,next)=>{
+    let {token} = req.query;
+    if(token === "giveaccess"){
+        next();
+    }
+    res.send("Access Denied")
+};
+
+app.get("/api",checkToken,(req, res) => {
+    res.send("data");
+});
+
+
 app.use("/random",(req,res,next)=>{
     console.log("hi, I am random middleware");
     next();
+});
+
+
+
+//404
+app.use((req,res)=>{
+    res.status(404).send("Page not found");
 });
 
 
