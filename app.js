@@ -28,7 +28,7 @@ const app = express();
 //     next();
 // });
 
-// ye middleware layer hai api ko protect karne ke liye yash 21 06 455612  56 re
+// ye middleware layer hai api ko protect karne ke liye yash 21 06 455612  56 rohit
 const checkToken = (req,res,next)=>{
     let {token} = req.query;
     if(token === "giveaccess"){
