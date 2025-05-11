@@ -28,7 +28,7 @@ const app = express();
 //     next();
 // });
 
-// ye middleware layer hai api ko protect karne ke liye 
+// ye middleware layer hai api ko protect karne ke liye  middleware with error handling
 const checkToken = (req,res,next)=>{
     let {token} = req.query;
     if(token === "giveaccess"){
