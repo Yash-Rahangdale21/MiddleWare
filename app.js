@@ -54,6 +54,12 @@ app.use((req,res)=>{
     res.status(404).send("Page not found");
 });
 
+//error handling middleware
+app.use((err,req,res,next)=>{
+    console.log("error", err.message);
+    res.status(500).send("Internal server error");
+});
+
 
 
 app.get('/', (req, res) => {
