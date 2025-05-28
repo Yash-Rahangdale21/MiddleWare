@@ -47,10 +47,21 @@ app.use("/random",(req,res,next)=>{
     next();
 });
 
+app.get("/err", (req, res) => {
+    abcd = abcd;
+});
+
 //error handling middleware
 app.use((err,req,res,next)=>{
-    console.log("error", err.message);
-    res.status(500).send("Internal server error");
+    console.log("------Error -----");
+    next(err);  // next() is used to pass the error to the next middleware
+    
+});
+
+app.use((err,req,res,next)=>{
+    console.log("------Error2 -----");
+    next(err);  // next() is used to pass the error to the next middleware
+    
 });
 
 //404 error handling
