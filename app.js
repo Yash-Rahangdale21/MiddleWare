@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const ExpressError = require('./ExpressError');
 
 //middleware -> response spend 
 
@@ -34,7 +35,7 @@ const checkToken = (req,res,next)=>{
     if(token === "giveaccess"){
         next();
     }
-   throw new Error("Access Denied")
+   throw new ExpressError(401,"Access Denied")
 };
 
 app.get("/api",checkToken,(req, res) => {
@@ -51,18 +52,24 @@ app.get("/err", (req, res) => {
     abcd = abcd;
 });
 
-//error handling middleware
-app.use((err,req,res,next)=>{
-    console.log("------Error -----");
-    next(err);  // next() is used to pass the error to the next middleware
-    
+//activity
+app.get("/admin", (req, res) => {
+    throw new ExpressError(403,"You are not allowed to access this page");
 });
 
+//error handling middleware
+
+// custom error handling middleware
 app.use((err,req,res,next)=>{
-    console.log("------Error2 -----");
-    next(err);  // next() is used to pass the error to the next middleware
-    
+    let {status=500, message="Something went wrong"} = err;
+    res.status(status).send(message);
 });
+
+// app.use((err,req,res,next)=>{
+//     console.log("------Error2 -----");
+//     next(err);  // next() is used to pass the error to the next middleware
+    
+// });
 
 //404 error handling
 // app.use((req,res)=>{
